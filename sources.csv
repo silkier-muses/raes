@@ -1,0 +1,14 @@
+id,source,url,use_and_limit
+D1,Syften public subreddit statistics,https://syften.com/reddit/r/news,Provider hourly UTC posts plus comments. Each subreddit has its own URL and preserved snapshot in source_manifest.csv.
+E1,"Yandex statement, Oct 9 2026",https://yandex.com/company/news/2026-10-09,Primary company account places Sasovo damage overnight Oct 7-8 and Kaluga on the morning of Oct 9. Does not verify exact strike times; recovery uncertain.
+E2,"Vedomosti, Oct 8 2026",https://www.vedomosti.ru/technology/articles/2026/10/08/1235289-chto-izvestno,Reports user complaints around 02:00 Moscow. Complaint time is not a confirmed strike time.
+E3,Yandex Cloud official availability alert,https://t.me/yandexcloudalerts/1532,Official public channel displays initial availability warning at 01:12 UTC on Oct 11. Alert time is not attack time.
+E4,Yandex Cloud official attack confirmation,https://t.me/yandexcloudalerts/1533,Official Oct 11 announcement reports attack on another data center. Public channel updates describe ongoing limitations and recovery activity.
+E5,Yandex Cloud official alert timeline,https://t.me/s/yandexcloudalerts,Continuing disruption across Oct 9-11 means full recovery inside 12 hours is not established.
+E6,"The Kyiv Independent, Oct 11 2026",https://kyivindependent.com/third-yandex-data-center-in-russia-shut-down-following-reported-drone-attack/,Reports a third Yandex facility in Vladimir region interrupted after a reported attack.
+E7,"The Insider, Oct 11 2026",https://theins.ru/news/298162,Secondary account of third attack and continuing cloud issues; links to primary company channel.
+E8,"Independent outage monitor, Oct 11 2026",https://ip-checker.pro/ru/blog/sboj-yandeksa-ataka-na-data-centr-oktyabr-2026,Secondary monitoring reports interruption around 03:45 Moscow; exact strike time remains unverified.
+R1,Reddit official status incident,https://stspg.io/hwq20l05fd5y,Recorded start 2026-10-07T19:58:52.869Z and resolution 20:55:28Z. Exclude both affected hourly bins.
+M1,"Wing, Freedman and Hollingsworth (2024), Stacked Difference-in-Differences",https://www.nber.org/papers/w32054,Method background on stacked designs and weighting. The present descriptive before-after study does not implement or identify this paper causal ATT estimator.
+M2,"Cameron and Miller (2015), A Practitioner Guide to Cluster-Robust Inference",https://cameron.econ.ucdavis.edu/research/Cameron_Miller_JHR_2015_February.pdf,Method background on dependence within groups and unreliable conventional inference with few clusters; no IID-hour significance claims here.
+M3,"Lopez Bernal, Cummins and Gasparrini (2017), Interrupted time series regression tutorial",https://academic.oup.com/ije/article/46/1/348/2622842,"Method background on seasonality, autocorrelation and time-varying confounding. These adjustments do not remove all alternative explanations."

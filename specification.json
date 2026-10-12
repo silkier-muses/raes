@@ -1,0 +1,24 @@
+{
+  "method": "Descriptive stacked before-after event study with incident fixed effects",
+  "frozen_before_short_window_results": true,
+  "primary_hours": 12,
+  "sensitivity_hours": 10,
+  "pre_hours": "same as post, excluding known Reddit incident hours",
+  "events": [
+    {"event": "Sasovo", "reported_local_date": "2026-10-08", "anchor_utc": "2026-10-08T00:00", "offset_hours": [-3,-2,-1,0,1,2,3], "timing_basis": "Analyst proxy, 03:00 Moscow; company says overnight Oct 7-8; reports place complaints around 02:00 Moscow and network deterioration by 04:00. Sweep midnight-06:00 Moscow, not a confidence interval."},
+    {"event": "Kaluga", "reported_local_date": "2026-10-09", "anchor_utc": "2026-10-09T03:00", "offset_hours": [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6], "timing_basis": "Analyst proxy, 06:00 Moscow; primary company statement says morning, some reports say overnight. Exact time unverified. Sweep midnight-noon Moscow, not a confidence interval."},
+    {"event": "Vladimir", "reported_local_date": "2026-10-11", "anchor_utc": "2026-10-11T01:00", "offset_hours": [-4,-3,-2,-1,0,1,2], "timing_basis": "Analyst proxy, 04:00 Moscow; first official alert visible at 01:12 UTC, secondary monitoring reports interruption around 03:45 Moscow. Sweep midnight-06:00 Moscow, not a confidence interval. Alert time is not strike time."}
+  ],
+  "reference_lags_days": [7,14,21],
+  "baseline_volume_period_utc": ["2026-09-12","2026-10-06"],
+  "minimum_baseline_activity_per_day": 100,
+  "minimum_expected_count_each_half": 20,
+  "excluded_hours_utc": ["2026-10-07T19:00","2026-10-07T20:00"],
+  "outcome": "log1p(hourly posts+comments) minus mean log1p at the identical UTC hour 7,14,21 days earlier",
+  "percentage_change": "100*((observed_post/expected_post)/(observed_pre/expected_pre)-1); expected is sum of arithmetic means at identical hours 7,14,21 days earlier",
+  "pooled_r": "Within-incident weighted Pearson correlation of post indicator and adjusted log activity; each incident total weight 1. This is partial r controlling for incident intercepts, not correlation between only three event totals.",
+  "benchmark_check": "Subtract per-hour median adjusted log activity among baseline>=100/day series; leave each target out of its own benchmark. This is a broad-sample sensitivity, not a proven untreated control.",
+  "repeat_rule": "Negative r and negative percentage change for every separate incident. Stronger sensitivity flag requires this at every swept start time for both 10h/12h and with/without broad-sample adjustment.",
+  "ranking_rule": "Lowest primary 12h pooled r among nominal 3/3 decreases; stronger timing-stability category shown separately. No tuning of anchor or length to maximize correlation.",
+  "inference": "Descriptive only. No IID-hour p values, no causal confidence intervals: only 3 nearby incidents, uncertain timing, possible carryover, and exploratory selection across 1221 targets. Timing ranges are scenario ranges, not confidence intervals."
+}

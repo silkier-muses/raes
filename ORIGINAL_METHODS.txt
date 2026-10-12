@@ -1,0 +1,166 @@
+REPEATED REDDIT DECREASES: EXPLORATORY SHORT-WINDOW STUDY
+Data retrieved October 12, 2026. Public aggregate activity only.
+
+RESULT
+1,221 subreddit series were examined; 968 met the primary volume/completeness
+rules. Ninety had negative adjusted r AND negative adjusted percentage change
+for all three nominal 12-hour comparisons. ZERO retained both negative signs
+for all three incidents across every tested start hour and both 10/12-hour
+lengths. All 90 fail at least one direction check, not merely a volume rule.
+No ranked community is a timing-stable result under this specification.
+This strict sensitivity failure does not prove there was no effect.
+
+WHAT IS MEASURED
+Syften public hourly posts plus comments, in UTC. These are provider-observed
+activity counts, not Reddit visits, unique visitors, comment-only counts, or
+bot counts. Provider completeness/deletion handling cannot be independently
+audited from these aggregate pages. No user identities or post text are used.
+Source snapshots are the exact public HTML pages retrieved for the preceding
+study; source_manifest.csv records URL, retrieval time, hashes and coverage.
+There are 1,221 snapshots and 908,424 hourly cells (744 per community).
+All required event-window hours precede each source's partially observed hour.
+
+SUBREDDIT UNIVERSE
+The previously assembled 1,221-target set combines a broad popular-subreddit
+screen with US state, national political, European country and political
+candidates. It is not a random sample or a census of Reddit. The full list,
+including positive results and excluded low-volume series, is in results.csv.
+The retained geographic_selection.csv describes the earlier display selection;
+its analysis_status field refers to that prior daily model, NOT eligibility
+under this short-window model. Use results.csv eligible for current eligibility.
+Flags identify community topic/region, not contributor location or nationality.
+The mobile overall table is the ten lowest pooled r among eligible nominal
+3/3 decreases. The US/Europe table includes every nominal 3/3 decrease among
+the prior display=True geographic selection (14), sorted within US/Europe.
+Community categories are descriptive editorial labels, not data-derived traits.
+
+WHY THIS METHOD
+A descriptive stacked before-after event study aligns observations around
+each incident and combines within-incident changes with equal incident weight.
+Incident intercepts remove differing activity levels across event windows.
+This is NOT a causal stacked difference-in-differences ATT estimator: affected
+communities and verified untreated controls are unknown. Wing et al. explain
+why stacking and weighting require care in causal DiD designs; that paper's
+identification assumptions are not established here. Cameron and Miller
+explain why correlated observations and few clusters undermine naive precision.
+We consulted these published methods; this is not independent human review.
+
+EVENT TIMING: PROXIES, NOT VERIFIED STRIKE INSTANTS
+Sasovo: nominal 2026-10-08 00:00 UTC (03:00 Moscow). Company statement says
+overnight Oct 7-8. Sweep Oct 7 21:00 through Oct 8 03:00 UTC, hourly.
+Kaluga: nominal 2026-10-09 03:00 UTC (06:00 Moscow). Company statement says
+morning Oct 9; some reporting says overnight. Sweep Oct 8 21:00 through
+Oct 9 09:00 UTC, hourly.
+Vladimir: nominal 2026-10-11 01:00 UTC (04:00 Moscow). First official cloud
+availability alert displays 01:12 UTC; an outage alert is not a strike time.
+Sweep Oct 10 21:00 through Oct 11 03:00 UTC, hourly.
+These analyst-selected sweeps are sensitivity scenarios, not confidence
+intervals or an assertion that all times are equally likely. Exact attack
+times remain unverified. Source links and timing evidence are in sources.csv.
+Reports attribute the incidents to Ukrainian attacks on Russian Yandex
+facilities; neither attribution nor which Reddit activity used those facilities
+is independently established by this analysis.
+
+WINDOWS AND SEASONALITY
+For each incident, compare the 12 hours beginning at the selected anchor with
+the immediately preceding 12 hours. A 10-hour length is a sensitivity check.
+Remove 2026-10-07 19:00 and 20:00 UTC everywhere: the official Reddit status
+incident spans approximately 19:58-20:55 UTC. Thus nominal Sasovo has 10 usable
+pre-hours and 12 post-hours; the other nominal incidents each have 12+12.
+Each usable hour is compared with the same UTC hour and weekday 7, 14 and
+21 days earlier. This controls regular weekly/daily rhythms without treating
+Friday night as comparable with Monday morning. Three historical matches
+remain noisy and can themselves contain exceptional events.
+
+FORMULAS
+For subreddit s and hour t, let C be observed posts plus comments.
+Historical expected count E[t] = mean(C[t-7d], C[t-14d], C[t-21d]).
+Adjusted log activity Y[t] = log(1+C[t]) minus mean(log(1+C[t-kd]))
+for k = 7,14,21. Log adjustment reduces the influence of large count spikes.
+X[t] = 1 in the post window, 0 in the pre window.
+Within each incident e, demean X and Y. Let cov[e], vx[e], vy[e] be the means
+of Xcenter*Ycenter, Xcenter^2 and Ycenter^2 across its retained hours.
+Combined r = mean_e(cov[e]) / sqrt(mean_e(vx[e])*mean_e(vy[e])).
+This is weighted partial Pearson r controlling for incident intercepts, with
+each incident total weight 1 (hour weight 1/n_e). The independent reproduction
+check residualizes with weighted least squares and verifies the same result.
+It is not r calculated from three event totals, nor a Fisher-z meta-analysis.
+Negative r means lower adjusted log activity in the chosen post windows;
+r=-1 is a perfect negative linear relationship after adjustment, r=0 is no
+linear relationship, r=+1 is a perfect positive relationship. r is not percent.
+
+Percentage change is calculated separately for each incident:
+100 * [(observed_post / expected_post) /
+       (observed_pre / expected_pre) - 1].
+Observed/expected are sums across the retained hours of that half-window.
+This is a seasonally normalized change relative to the immediate pre-window,
+not a raw comparison of two totals. Both r and percentage must be negative
+to count as a decline; log-weighted r and count-weighted percent can disagree.
+Values on the infographic are rounded; results.csv contains full precision.
+The earlier daily study used a different estimator, window and baseline;
+do not compare its r or percent numerically with this study's estimates.
+
+ELIGIBILITY AND REPEATED-DECREASE RULE
+Mean activity at least 100/day during Sep 12-Oct 6 UTC (25 days).
+Each nominal incident must have complete required data, finite r/percent,
+at least 20 expected events in BOTH halves, and positive observed pre-count.
+Repeated nominal decrease: negative r AND negative percentage for each of
+the three nominal 12-hour incident windows. Rank eligible matches by lowest
+combined r. This is an exploratory screen, not a significant-discovery list.
+time_only requires the same direction/eligibility checks for every tested
+start hour and both lengths. time_and_benchmark also requires those checks
+with the broad-sample adjustment below. These flags are FALSE for all 90.
+
+BROAD-SAMPLE SENSITIVITY
+For each hour, compute the median adjusted log activity among the 972 series
+with baseline activity >=100/day, leaving the target itself out when present.
+Subtract that median from Y and multiply E by exp(median). Rerun calculations.
+This checks whether results depend on a broad Reddit swing, but is NOT a
+verified untreated control; it can remove part of a genuine widespread effect.
+There are 108 event-specific scenarios per target (7+13+7 start hours, two
+lengths, two benchmark options), or 131,868 rows in sensitivity.csv.gz.
+The timing-only rule uses 54 scenarios per target. The primary results do
+not use the broad-sample adjustment; its results are labeled sensitivity.
+
+LIMITS AND NEXT EVIDENCE NEEDED
+Only three closely spaced incidents are available. Hours within incidents
+are serially correlated; incidents may share news, network failures and carryover.
+No IID-hour p values, confidence intervals, significance labels, or causal
+effect claims are made. The 1,221-way exploratory search makes extreme ranks
+unsurprising; restricting publication to negative results cannot remove that
+selection problem. Full results retain the positive and excluded series.
+Nominal windows do not overlap, but some swept windows can. We do not assume
+independent replication across those comparisons. Later pre-windows can still
+contain disruption from earlier incidents. Yandex reported continuing outages;
+there is no verified basis to assume all backups restored service in 12 hours.
+Local before/after comparisons help with recent levels but do not fully model
+within-day trends, breaking news, sports schedules, moderation or collector errors.
+No community-specific news-event audit or holiday model was performed.
+To infer a reliable association, obtain verified outage onset/recovery times,
+longer history, more independent incidents, coverage diagnostics and credible
+unaffected comparison series; fix the design before examining a held-out period.
+Aggregate decreases cannot identify anyone's location, nationality, politics,
+bot status, server use, or affiliation with an influence operation.
+
+ANONYMITY AND VERIFICATION
+This package contains public community-level counts, public source snapshots,
+generic filenames, analysis code and citations. No personal/business account
+information, credentials, browser cookies, usernames, or individual post text
+from the requester were included. Public provider boilerplate remains in the
+source snapshots. No personal account is needed to download or reproduce.
+The anonymous file-host upload uses no logged-in account or userhash. This
+does not promise that the hosting provider keeps no access/network logs.
+Archives normalize entry timestamps and contain no Library identity metadata.
+SHA256SUMS.txt makes modifications detectable, but hashes do not prove source
+truth or make a self-published archive independently authenticated.
+
+REPRODUCE
+Install Python 3.10+ and numpy. Unzip into a directory, then run:
+  python reproduce.py
+The program verifies every packaged file hash, each original snapshot hash,
+parses all 908,424 hourly cells, checks totals against source post+comment
+counts, recomputes all results and sensitivity rows, and independently checks
+the combined r using weighted regression residuals. It needs no network or
+accounts. Run python analysis.py to write recomputed_analysis.json.
+specification.json records the choices fixed before inspecting these new
+short-window outputs. This is not a public preregistration or blinded study.
